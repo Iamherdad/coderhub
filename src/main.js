@@ -4,6 +4,5 @@ const {SERVER_PORT} = require('./config/server')
 require('./utils/handle-error')
 
 app.listen(SERVER_PORT,()=>{
- 
     console.log(`coderHub启动成功,端口号${SERVER_PORT}~`)
 })

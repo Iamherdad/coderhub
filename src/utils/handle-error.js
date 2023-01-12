@@ -20,6 +20,10 @@ app.on('error',(err,ctx)=>{
             code=-1004,
             message="密码错误"
             break;
+        case 'NOT_AUTH':
+            code = -1005
+            message="请求未授权"
+            break;  
     }
     ctx.body={code,message}
     return 
