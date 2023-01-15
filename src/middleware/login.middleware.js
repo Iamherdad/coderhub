@@ -1,6 +1,8 @@
 const app = require('../app')
 const {findUser} = require('../service/user.service')
 const {md5} = require('../utils/handle-md5')
+const jwt = require('jsonwebtoken')
+
 const verifyLogin =async (ctx,next)=>{
     const {username,password} = ctx.request.body
     if(!username||!password){
@@ -17,4 +19,22 @@ const verifyLogin =async (ctx,next)=>{
     next()
 }
 
-module.exports={verifyLogin}
+const verifyToken =async (ctx,next)=>{
+    const authorization = ctx.headers.authorization
+    if(!authorization){
+       return  ctx.app.emit('error','NOT_AUTH',ctx)
+    }
+    const token = authorization.replace('Bearer ', '')
+  
+    try{
+        // const verifyRes = jwt.verify(token,PUBLICK_KEY,{algorithms:'RS256'})
+        const verifyRes = jwt.verify(token,'lipengfei')
+        ctx.user=verifyRes
+       await next()
+    }catch(err){
+        console.log(err)
+        return  ctx.app.emit('error','NOT_AUTH',ctx)
+    }
+}
+
+module.exports={verifyLogin,verifyToken}

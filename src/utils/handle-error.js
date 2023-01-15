@@ -23,7 +23,11 @@ app.on('error',(err,ctx)=>{
         case 'NOT_AUTH':
             code = -1005
             message="请求未授权"
-            break;  
+            break;
+        default :
+        code = -1000,
+        message = "服务器异常"  
+        break    
     }
     ctx.body={code,message}
     return 

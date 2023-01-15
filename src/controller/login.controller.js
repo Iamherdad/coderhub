@@ -3,9 +3,9 @@ const {PRIVATE_KEY} = require('../config/screct')
 class LoginController{
    async login(ctx,next){
         const {username,id} = ctx.user
-        const token = jwt.sign({id,username},PRIVATE_KEY,{
+        const token = jwt.sign({id,username},'lipengfei',{
             expiresIn:60 * 60 * 24,
-            algorithm:'RS256'
+            // algorithm: 'RS256'
         })
        
         ctx.body={
